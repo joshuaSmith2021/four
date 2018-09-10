@@ -89,6 +89,22 @@ var game = {
   // set to true when someone wins
   gameOver: false
 };
+
+function switchTurn () {
+  switch (game.currentTurn) {
+    case 'RED':
+      alert('Red');
+      game.currentTurn = 'BLK';
+      break;
+    case 'BLK':
+      alert('Black');
+      game.currentTurn = 'RED';
+      break;
+    default:
+      alert('oops');
+      break;
+  }
+}
   </script>
 </body>
 </html>
