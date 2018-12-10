@@ -22,7 +22,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr class="game-row">
         <td class="game-slot"><button class="fab w3-white"></button></td>
         <td class="game-slot"><button class="fab w3-white"></button></td>
         <td class="game-slot"><button class="fab w3-white"></button></td>
@@ -31,7 +31,7 @@
         <td class="game-slot"><button class="fab w3-white"></button></td>
         <td class="game-slot"><button class="fab w3-white"></button></td>
       </tr>
-      <tr>
+      <tr class="game-row">
         <td class="game-slot"><button class="fab w3-white"></button></td>
         <td class="game-slot"><button class="fab w3-white"></button></td>
         <td class="game-slot"><button class="fab w3-white"></button></td>
@@ -40,7 +40,7 @@
         <td class="game-slot"><button class="fab w3-white"></button></td>
         <td class="game-slot"><button class="fab w3-white"></button></td>
       </tr>
-      <tr>
+      <tr class="game-row">
         <td class="game-slot"><button class="fab w3-white"></button></td>
         <td class="game-slot"><button class="fab w3-white"></button></td>
         <td class="game-slot"><button class="fab w3-white"></button></td>
@@ -49,7 +49,7 @@
         <td class="game-slot"><button class="fab w3-white"></button></td>
         <td class="game-slot"><button class="fab w3-white"></button></td>
       </tr>
-      <tr>
+      <tr class="game-row">
         <td class="game-slot"><button class="fab w3-white"></button></td>
         <td class="game-slot"><button class="fab w3-white"></button></td>
         <td class="game-slot"><button class="fab w3-white"></button></td>
@@ -58,7 +58,7 @@
         <td class="game-slot"><button class="fab w3-white"></button></td>
         <td class="game-slot"><button class="fab w3-white"></button></td>
       </tr>
-      <tr>
+      <tr class="game-row">
         <td class="game-slot"><button class="fab w3-white"></button></td>
         <td class="game-slot"><button class="fab w3-white"></button></td>
         <td class="game-slot"><button class="fab w3-white"></button></td>
@@ -67,7 +67,7 @@
         <td class="game-slot"><button class="fab w3-white"></button></td>
         <td class="game-slot"><button class="fab w3-white"></button></td>
       </tr>
-      <tr>
+      <tr class="game-row">
         <td class="game-slot"><button class="fab w3-white"></button></td>
         <td class="game-slot"><button class="fab w3-white"></button></td>
         <td class="game-slot"><button class="fab w3-white"></button></td>
@@ -87,24 +87,58 @@ var game = {
   // can be RED or BLK
   currentTurn: 'RED',
   // set to true when someone wins
-  gameOver: false
+  gameOver: false,
+  // a matrix containing game data
+  board: [
+    ['', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', '']
+  ]
 };
 
+function placeChecker (element) {
+  row = parseInt($(element).attr('id').charAt(1), 10);
+  for (i = game.board.length - 1; i >= 0; i--) {
+    if (game.board[i][row] === '') {
+      game.board[i][row] = game.currentTurn;
+      break;
+    }
+  }
+}
+
+function drawBoard () {
+  for (i = 0; i < game.board.length; i++) {
+    for (j = 0; j < game.board[i].length; j++) {
+      $(document.getElementsByClassName('game-row')[i].getElementsByClassName('game-slot')[j]).children().first().addClass('w3-' + game.board[i][j].toLowerCase());
+    }
+  }
+}
+
 function switchTurn () {
+  $('#turnDisplay').removeClass('w3-' + game.currentTurn.toLowerCase());
   switch (game.currentTurn) {
     case 'RED':
-      alert('Red');
-      game.currentTurn = 'BLK';
+      game.currentTurn = 'BLACK';
       break;
-    case 'BLK':
-      alert('Black');
+    case 'BLACK':
       game.currentTurn = 'RED';
       break;
     default:
-      alert('oops');
+      alert('There was an error in turn handling.');
       break;
   }
+  $('#turnDisplay').addClass('w3-' + game.currentTurn.toLowerCase());
+  $('#whoseTurn').text(game.currentTurn);
 }
+
+$('.trigger').click(function () {
+  placeChecker(this);
+  drawBoard();
+  switchTurn();
+});
   </script>
 </body>
 </html>
