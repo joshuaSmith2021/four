@@ -102,7 +102,7 @@ var game = {
 function placeChecker (element) {
   row = parseInt($(element).attr('id').charAt(1), 10);
   for (i = game.board.length - 1; i >= 0; i--) {
-    if (game.board[i][row] === '') {
+    if (game.board[i][row] === 'WHITE') {
       game.board[i][row] = game.currentTurn;
       break;
     }
